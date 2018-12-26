@@ -32,6 +32,7 @@
         </div>
         <div class="spacer"></div>
         <button class="classic-btn" id="convert" disabled>转换</button>
+        <button class="classic-btn" id="export">导出</button>
       </nav>
       <div id="editor" touch-action="none"></div>
     </div>
@@ -46,6 +47,7 @@
       var redoElement = document.getElementById('redo');
       var clearElement = document.getElementById('clear');
       var convertElement = document.getElementById('convert');
+      var exportElement = document.getElementById('export');
 
       editorElement.addEventListener('changed', function (event) {
         undoElement.disabled = !event.detail.canUndo;
@@ -101,6 +103,9 @@
       });
       convertElement.addEventListener('click', function () {
         editorElement.editor.convert();
+      });
+      exportElement.addEventListener('click', function () {
+        editorElement.editor.export();
       });
 
       /**
