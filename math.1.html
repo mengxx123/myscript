@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +11,7 @@
     <title>WEBSOCKET Math iink</title>
 
     <link rel="stylesheet" href="./dist/myscript.min.css"/>
-    <link rel="stylesheet" href="examples.css">
+    <link rel="stylesheet" href="math.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.10.0-rc.1/katex.min.css">
   </head>
 
@@ -33,6 +32,7 @@
         </div>
         <div class="spacer"></div>
         <button class="classic-btn" id="convert" disabled>转换</button>
+        <button class="classic-btn" id="export">导出</button>
       </nav>
       <div id="editor" touch-action="none"></div>
     </div>
@@ -47,6 +47,7 @@
       var redoElement = document.getElementById('redo');
       var clearElement = document.getElementById('clear');
       var convertElement = document.getElementById('convert');
+      var exportElement = document.getElementById('export');
 
       editorElement.addEventListener('changed', function (event) {
         undoElement.disabled = !event.detail.canUndo;
@@ -74,7 +75,7 @@
       }
 
       editorElement.addEventListener('exported', function (evt) {
-        console.log('exported', evt.detail)
+
         const exports = evt.detail.exports;
         if (exports && exports['application/x-latex']) {
           convertElement.disabled = false;
@@ -103,6 +104,9 @@
       convertElement.addEventListener('click', function () {
         editorElement.editor.convert();
       });
+      exportElement.addEventListener('click', function () {
+        editorElement.editor.export();
+      });
 
       /**
        * Attach an editor to the document
@@ -111,7 +115,7 @@
        */
       MyScript.register(editorElement, {
         recognitionParams: {
-          type: 'MATH',
+          type: 'DIAGRAM',
           protocol: 'WEBSOCKET',
           apiVersion: 'V4',
           server: {
